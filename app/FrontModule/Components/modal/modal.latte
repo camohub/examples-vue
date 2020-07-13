@@ -1,0 +1,27 @@
+
+<div id="baseModal" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div n:snippet="modal" class="modal-content">
+			<div n:if="title" class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">{_$title}</h4>
+			</div>
+			<div class="modal-body">
+				{if $showModal}{control contentComponent}{/if}
+			</div>
+			{*<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary">Save changes</button>
+			</div>*}
+		</div>
+	</div>
+</div>
+
+{* This script snippet also runs on ajax request *}
+<div n:snippet="modalScript" style="display: none">
+	<script>
+		$(function() {
+			{$showModal} ? $('#baseModal').modal('show') : $('#baseModal').modal('hide');
+		});
+	</script>
+</div>

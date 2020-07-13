@@ -1,0 +1,53 @@
+{block content}
+
+<div class="row">
+	<div class="col-xs-12">
+		<div id="app">
+			<h2>Who is the hero? {{ dude }}</h2>
+
+			<div class="m-b-20">Who is the best? {{ dude }}</div>
+
+			<form action="" class="m-b-20">
+				<b>Change text:</b> <input type="text" name="dude" id="dudeId" v-model="dude">
+			</form>
+
+			<ul class="m-b-20">
+				<li v-for="item in myList">
+					{{ item }}
+					<small class="blue" v-if="item.length > 7"><br> - blue text shows only if item.length is > 7</small>
+				</li>
+			</ul>
+
+			<form action="" class="m-b-20" @submit.prevent="addItem">
+				<input type="text" v-model="firstName" name="first" id="firstName">
+				<input type="text" v-model="lastName" name="last" id="lastName">
+				<input type="submit" name="" id="">
+			</form>
+
+			<button @click="counter++">Click +</button>
+			<span v-bind:class="{ green: counter >= 5, red: counter < 5 }" class="bold">{{ counter }}</span>
+			<button @click="counter--">Click -</button>
+		</div>
+	</div>
+</div>
+
+<script>
+	let app = new Vue({
+		el: '#app',
+		data: {
+			dude: 'Jack Frost',
+			myList: [
+				'Princess Mononoke', 'Wall-e', 'Optimus P.', 'Batman', 'Princess Bubblegun'
+			],
+			firstName: '',
+			lastName: '',
+			counter: 0
+		},
+		methods: {
+			addItem: function() {
+				if( this.firstName || this.lastName ) this.myList.unshift(this.firstName + ' ' + this.lastName)
+			}
+		}
+	});
+</script>
+{/block}

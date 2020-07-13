@@ -1,0 +1,53 @@
+parameters:
+	translator:
+		langs: [sk, cs, en]
+
+
+application:
+	errorPresenter: Error
+	mapping:
+		*: App\*Module\Presenters\*Presenter
+
+
+session:
+	expiration: 14 days
+
+
+translation:
+	debugger: true
+	default: sk
+	fallback: [sk_SK, sk]
+	whitelist: %translator.langs%
+
+
+orm:
+	model: App\Model\Orm\Orm
+
+
+console:
+	name: examples-vue
+	version: '1.0'
+	catchExceptions: true
+	autoExit: true
+	lazy: false
+
+
+extensions:
+	dbal: Nextras\Dbal\Bridges\NetteDI\DbalExtension
+	orm: Nextras\Orm\Bridges\NetteDI\OrmExtension
+	translation: Kdyby\Translation\DI\TranslationExtension
+	console: Contributte\Console\DI\ConsoleExtension(%consoleMode%)
+
+
+services:
+	router: App\Router\RouterFactory::createRouter
+	cacheStorage: Nette\Caching\Storages\FileStorage("%tempDir%/cache")
+	cache: Nette\Caching\Cache(@cacheStorage)
+	authenticator: App\Model\UserManager
+	authorizatorFactory: App\Model\AuthorizatorFactory
+	authorizator: @authorizatorFactory::create
+
+	#SERVICES
+
+	#COMPONENTS
+	- App\Front\Components\IModalControlFactory
