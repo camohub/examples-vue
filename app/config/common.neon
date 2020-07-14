@@ -43,7 +43,6 @@ services:
 	router: App\Router\RouterFactory::createRouter
 	cacheStorage: Nette\Caching\Storages\FileStorage("%tempDir%/cache")
 	cache: Nette\Caching\Cache(@cacheStorage)
-	authenticator: App\Model\UserManager
 	authorizatorFactory: App\Model\AuthorizatorFactory
 	authorizator: @authorizatorFactory::create
 

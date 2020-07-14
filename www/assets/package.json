@@ -1,5 +1,5 @@
 {
-	"name": "drom",
+	"name": "examples-vue",
 	"version": "1.0.0",
 	"description": "",
 	"main": "index.js",
@@ -8,10 +8,18 @@
 		"jquery": "^3.4.1",
 		"vue": "^2.6.11"
 	},
-	"devDependencies": {},
+	"devDependencies": {
+		"@babel/cli": "^7.10.4",
+		"@babel/core": "^7.10.4",
+		"@babel/polyfill": "^7.10.4",
+		"@babel/preset-env": "^7.10.4",
+		"browserify": "^16.5.1",
+		"core-js": "^3.6.5"
+	},
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
-		"test2": "ls"
+		"es5": "babel ./src/js/main.js -o ./dist/js/main.js && babel ./src/js/testModule.js -o ./dist/js/testModule.js",
+		"browserify": "browserify ./dist/js/main.js -o ./dist/js/bundle.js",
+		"build": "npm run es5 && npm run browserify"
 	},
 	"keywords": [],
 	"author": "",

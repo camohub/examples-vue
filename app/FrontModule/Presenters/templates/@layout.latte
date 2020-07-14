@@ -15,7 +15,8 @@
 	<script src="{$basePath}/assets/node_modules/jquery/dist/jquery.min.js"></script>
 	<script src="{$basePath}/assets/node_modules/vue/dist/vue.min.js"></script>
 	<script src="{$basePath}/assets/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-	<script src="{$basePath}/assets/js/main.min.js"></script>
+	<script src="{$basePath}/assets/dist/js/bundle.js"></script>
+	{*<script src="{$basePath}/assets/js/main.js"></script>*}
 
 	<title>{ifset title}{include title|stripHtml} | {/ifset}Examples - VUE</title>
 </head>
@@ -24,15 +25,13 @@
 	<div class="container-fluid">
 		<div class="row">
 			<h1 class="col-xs-12 col-md-offset-2 col-md-10 heading1">
-				Examples VUE
+				Examples Babel + Browserify
 			</h1>
 		</div>
 	</div>
 	<div class="container">
 		<div class="row">
 			<div class="col-xs-12 col-md-2" id="mainMenu">
-				<a n:href="Default:default">Default test</a>
-				<a n:href="Default:default">Default test</a>
 			</div>
 			<div class="col-xs-12 col-md-10">
 				{include content}

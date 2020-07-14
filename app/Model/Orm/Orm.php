@@ -13,17 +13,7 @@ use App\Model\Orm\ProductsRepository;
 
 /**
  * Model
- * @property UsersRepository $users
- * @property RolesRepository $roles
- * @property DatagridsRepository $datagrids
  * @property CategoriesRepository $categories
- * @property CategoriesLangsRepository $categoriesLangs
- * @property ProductsRepository $products
- * @property ProductsLangsRepository $productsLangs
- * @property ParametersRepository $parameters
- * @property ParametersLangsRepository $parametersLangs
- * @property ProductsParametersRepository $productsParameters
- * @property ProductsImagesRepository $productsImages
  */
 class Orm extends Model
 {

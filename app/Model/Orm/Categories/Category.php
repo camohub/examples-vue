@@ -15,13 +15,9 @@ use Nextras\Orm\Relationships\OneHasMany;
  * @property OneHasMany|Category[]            $allCategories      {1:m Category::$parent, orderBy=[priority=ASC], cascade=[persist, remove]}
  * @property OneHasMany|Category[]            $adminCategories    {virtual}
  * @property OneHasMany|Category[]            $categories         {virtual}
- * @property OneHasMany|CategoryLang[]        $langs              {1:m CategoryLang::$category, cascade=[persist, remove]}
+ * @property string                           $title
  * @property int                              $priority           {default 1}
  * @property int                              $status             {default 1}
- * @property-read string                      $name               {virtual}
- *
- * @property ManyHasMany|Product[]|NULL       $products           {m:m Product::$categories, isMain=true}
- * @property ManyHasMany|Parameter[]|NULL     $parameters         {m:m Parameter::$categories}
  */
 class Category extends Entity
 {
@@ -30,24 +26,15 @@ class Category extends Entity
 	const STATUS_DELETED = 3;
 
 
-	public function getterName()
+	public function getterCategories()
 	{
-		$lang = $this->langs->get()->getBy(['lang' => BasePresenter::$staticLocale]);
-		if( !$lang || !$lang->name ) $lang = $this->langs->get()->getBy(['lang' => 'sk']);
-
-		return $lang->name;
+		return $this->allCategories->get()->findBy(['status' => self::STATUS_PUBLISHED]);
 	}
 
 
 	public function getterAdminCategories()
 	{
 		return $this->allCategories->get()->findBy(['status!=' => self::STATUS_DELETED]);
-	}
-
-
-	public function getterCategories()
-	{
-		return $this->allCategories->get()->findBy(['status' => self::STATUS_PUBLISHED]);
 	}
 
 }

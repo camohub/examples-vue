@@ -25,7 +25,6 @@ final class RouterFactory
 		$frontRouter->addRoute('<presenter>[/<action>][/<id>]', [
 			'presenter' => [
 				Route::VALUE => 'Default',
-				Route::PATTERN => 'default',
 			],
 			'action' => [
 				Route::VALUE => 'default',
