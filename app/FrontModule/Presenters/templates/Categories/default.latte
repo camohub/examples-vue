@@ -1,0 +1,33 @@
+{block content}
+
+<div class="row">
+	<div class="col-xs-12">
+		<div id="app">
+			<h2>Categories</h2>
+
+			<ul>
+				<li v-for="c in categories">{{ c.title }}</li>
+			</ul>
+		</div>
+	</div>
+</div>
+
+<script>
+	let app = new Vue({
+		el: '#app',
+		data: {
+			dude: 'Jack Frost',
+			categories: [
+				{foreach $categories as $c}
+					{
+						title: {$c->title}, status: {$c->status}, priority: {$c->priority}
+					}
+					{sep}, {/sep}
+				{/foreach}
+			]
+		},
+		methods: {
+		}
+	});
+</script>
+{/block}

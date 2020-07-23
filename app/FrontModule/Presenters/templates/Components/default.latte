@@ -1,0 +1,71 @@
+{block content}
+
+<div class="row">
+	<div class="col-xs-12">
+		<div id="app">
+			<h2>Component - categories</h2>
+
+			<p>
+				Pri komponentách si treba všimnúť že majú vlastný scope pre premenné.
+				<br>Tiež majú parameter props, do ktorého sa dajú predávať hodnoty do komponenty cez v-bind:varName="value".
+				<br>Táto hodnota môže byť kľudne objekt.
+			</p>
+
+			<ul>
+				{* v-bind presunie item do this.props.item tj. vytvorí lokálnu premennú *}
+				<menu-item v-for="item in vueAppCategories" v-bind:item="item"></menu-item>
+			</ul>
+
+			<form action="" @submit.prevent="editFirstTitleCallback">{* pri submite zavolá editFistTitleCallback *}
+				<input type="text" value="" v-model="editFirstTitle">{* zmeny value ukladá do premennej editFirstTitle *}
+				<input type="submit" value="Change first title">
+			</form>
+		</div>
+	</div>
+</div>
+
+<script>
+	Vue.component('menu-item', {
+		template: '<li><b style="color:red">{{ item.status }} {{ item.title }} {{ item.priority }}</b></li>',
+		props: [
+			'item'
+		],
+		data: function () {
+			return {
+				localItemVariable: 0
+			}
+		},
+		methods: {
+			clickCallback: function()
+			{
+				this.localItemVariable = this.localItemVariable ++;
+				console.log( 'localItemVariable' );
+				console.log( this.localItemVariable );
+				console.log( 'this.item' );
+				console.log( this.item );
+			}
+		}
+	});
+
+	let app = new Vue({
+		el: '#app',
+		data: {
+			dude: 'Jack Frost',
+			vueAppCategories: [
+				{foreach $categories as $c}
+					{* Vytvorý js objekt *}
+					{	title: {$c->title}, status: {$c->status}, priority: {$c->priority}	}
+					{sep}, {/sep}
+				{/foreach}
+			],
+			editFirstTitle: ''
+		},
+		methods: {
+			'editFirstTitleCallback': function(e) {
+				console.log(this.editFirstTitle);
+				this.vueAppCategories[0].title = this.editFirstTitle;
+			}
+		}
+	});
+</script>
+{/block}

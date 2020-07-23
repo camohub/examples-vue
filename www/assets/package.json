@@ -17,7 +17,7 @@
 		"core-js": "^3.6.5"
 	},
 	"scripts": {
-		"es5": "babel ./src/js/main.js -o ./dist/js/main.js && babel ./src/js/testModule.js -o ./dist/js/testModule.js",
+		"es5": "babel ./src/js/main.js -o ./dist/js/main.js && babel ./src/js/testModule.js -o ./dist/js/testModule.js && babel ./src/js/testModule2.js -o ./dist/js/testModule2.js",
 		"browserify": "browserify ./dist/js/main.js -o ./dist/js/bundle.js",
 		"build": "npm run es5 && npm run browserify"
 	},

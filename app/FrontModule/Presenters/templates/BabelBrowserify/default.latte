@@ -1,0 +1,16 @@
+{block content}
+
+	<div class="row">
+		<div class="col-xs-12">
+			<ul>
+				<li>Hlavné komponenty tohoto príkladu sú Babel a Browserify</li>
+				<li>Babel slúži na prevod ES6 na ES5. Babel sa konfiguruje cez babel.config.json</li>
+				<li>Browserify slúži na prevod node.js modulov na js pre prehliadače. tj. odstráni volania require()
+					a vytvorí jeden js súbor, ktorý obsahuje kód všetkých statných js súborov.</li>
+				<li>V sekcii scripts package.json sú konzolové príkazy. Spúšťa sa iba príkaz build, ktorý volá ostatné script príkazy.</li>
+				<li>V súbore src/js/main.js sú dva príklady vkladania modulov, ktoré fungujú s Browserify</li>
+			</ul>
+		</div>
+	</div>
+
+{/block}
