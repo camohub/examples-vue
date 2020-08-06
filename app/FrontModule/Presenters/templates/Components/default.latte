@@ -13,12 +13,17 @@
 
 			<ul>
 				{* v-bind presunie item do this.props.item tj. vytvorí lokálnu premennú *}
-				<menu-item v-for="item in vueAppCategories" v-bind:item="item"></menu-item>
+				<menu-item v-for="item in vueAppCategories" v-bind:item="item" v-bind:dude="dude"></menu-item>
 			</ul>
 
 			<form action="" @submit.prevent="editFirstTitleCallback">{* pri submite zavolá editFistTitleCallback *}
 				<input type="text" value="" v-model="editFirstTitle">{* zmeny value ukladá do premennej editFirstTitle *}
 				<input type="submit" value="Change first title">
+			</form>
+
+			<form action="" @submit.prevent="addItem">{* pri submite zavolá editFistTitleCallback *}
+				<input type="text" value="" v-model="newCategoryName">
+				<input type="submit" value="Add new item">
 			</form>
 		</div>
 	</div>
@@ -26,9 +31,13 @@
 
 <script>
 	Vue.component('menu-item', {
-		template: '<li><b style="color:red">{{ item.status }} {{ item.title }} {{ item.priority }}</b></li>',
+		template: 	'<li>' +
+						'<b style="color:red">{{ item.status }} {{ item.title }} {{ item.priority }} {{ dude }}</b>' +
+						'<menu-item-item v-bind:someVariable="item.title"></menu-item-item>' +
+					'</li>',
 		props: [
-			'item'
+			'item',
+			'dude'
 		],
 		data: function () {
 			return {
@@ -47,6 +56,21 @@
 		}
 	});
 
+	Vue.component('menu-item-item', {
+		template: '<div><strong style="color:red">This is inside component with parent value: {{ someVariable }}</strong></div>',
+		props: [
+			'someVariable'
+		],
+		data: function () {
+			return {
+				localItemVariable: 0
+			}
+		},
+		methods: {
+
+		}
+	});
+
 	let app = new Vue({
 		el: '#app',
 		data: {
@@ -58,14 +82,20 @@
 					{sep}, {/sep}
 				{/foreach}
 			],
-			editFirstTitle: ''
+			editFirstTitle: '',
+			newCategoryName: null
 		},
 		methods: {
 			'editFirstTitleCallback': function(e) {
 				console.log(this.editFirstTitle);
 				this.vueAppCategories[0].title = this.editFirstTitle;
+			},
+			'addItem': function() {
+				this.vueAppCategories.unshift({ title: this.newCategoryName, status: 55, priority: 100 });
 			}
 		}
 	});
+
+	console.log(app);
 </script>
 {/block}

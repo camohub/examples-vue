@@ -1,0 +1,99 @@
+{block content}
+
+<div class="row">
+	<div class="col-xs-12">
+		<div id="app">
+			<h2>Child - Parent</h2>
+
+			<p>
+				Hodnoty sa z rodiča do potomka predávajú cez pole props resp. v-bind:name="value"
+			</p>
+			<p>
+				Hodnoty ktoré sa predávajú z potomka na rodiča sa musia predať cez event za použitia $emit("event-name", someData)
+			</p>
+
+			<ul>
+				{* v-bind presunie item do this.props.item tj. vytvorí lokálnu premennú *}
+				<menu-item v-for="item in vueAppCategories" v-bind:item="item"></menu-item>
+			</ul>
+
+			<new-item-form @add-item-event="parentAddItem"></new-item-form>
+		</div>
+	</div>
+</div>
+
+<script>
+	Vue.config.silent = false;
+	Vue.config.devtools = true
+
+	Vue.component('menu-item', {
+		template: `<li>
+						<b style="color:red">{{ item.status }} {{ item.title }} {{ item.priority }}</b>
+					</li>`,
+		props: [
+			'item',
+			'dude'
+		],
+		data: function () {
+			return {
+				localItemVariable: 0
+			}
+		},
+		methods: {
+			clickCallback: function()
+			{
+				this.localItemVariable = this.localItemVariable ++;
+			}
+		}
+	});
+
+	Vue.component('new-item-form', {
+		template:	`<form action="" @submit.prevent="formSubmit">
+						<input v-model="newCategoryName" type="text" value="">
+						<input type="submit" value="Add new item">
+					</form>`,
+		props: [
+
+		],
+		data: function () {
+			return {
+				newCategoryName: null
+			}
+		},
+		methods: {
+			formSubmit: function()
+			{
+				alert('aaaaaaaaaaaaaaaaa');
+				this.$emit('add-item-event', this.newCategoryName);
+			}
+		}
+	});
+
+	let app = new Vue({
+		el: '#app',
+		data: {
+			dude: 'Jack Frost',
+			vueAppCategories: [
+				{foreach $categories as $c}
+					{* Vytvorý js objekt *}
+					{	title: {$c->title}, status: {$c->status}, priority: {$c->priority}	}
+					{sep}, {/sep}
+				{/foreach}
+			],
+			editFirstTitle: '',
+			newCategoryName: null
+		},
+		methods: {
+			'editFirstTitleCallback': function(e) {
+				console.log(this.editFirstTitle);
+				this.vueAppCategories[0].title = this.editFirstTitle;
+			},
+			'parentAddItem': function($event) {
+				alert('bbbbbbbbbbbbbbbbb');
+				this.vueAppCategories.unshift({ title: $event, status: 55, priority: 100 });
+			}
+		}
+	});
+
+</script>
+{/block}
