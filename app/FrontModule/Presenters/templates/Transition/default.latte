@@ -1,0 +1,104 @@
+{block content}
+
+<div class="row">
+	<div class="col-xs-12">
+		<div id="app">
+			<h2>Transitions groups</h2>
+
+			<p>
+				Počas pridávania a mazania elementov Vue pridáva špecifické css classy.
+				Na tieto classy sa dajú naviazať css animácie.
+			</p>
+			<p>
+				Element &lt;transition-group&gt; musí mať uvedený napr. tag="p".<br>
+				Jeho potomkovia musia mať udevený key, podľa ktorého Vue určuje ktorý prvok v rámci transition-group sa animuje.
+			</p>
+			<p>
+				<a href="https://vuejs.org/v2/guide/transitions.html#List-Transitions">documentation</a>
+			</p>
+
+			<transition-group name="list" tag="ul">
+				{* v-bind presunie item do this.props.item tj. vytvorí lokálnu premennú *}
+				<li v-for="(item, index in vueAppCategories" v-bind:key="item.id" class="list-item">{{ item.title }}</li>
+			</transition-group>
+
+			<new-item-form @add-item-event="parentAddItem"></new-item-form>
+		</div>
+	</div>
+</div>
+
+<script>
+	Vue.config.silent = false;
+	Vue.config.devtools = true
+
+	/*Vue.component('menu-item', {
+		template: `<li class="transition-item">
+						<b style="color:red">{{ item.status }} {{ item.title }} {{ item.priority }}</b>
+					</li>`,
+		props: [
+			'item',
+			'dude'
+		],
+		data: function () {
+			return {
+				localItemVariable: 0
+			}
+		},
+		methods: {
+			clickCallback: function()
+			{
+				this.localItemVariable = this.localItemVariable ++;
+			}
+		}
+	});*/
+
+	Vue.component('new-item-form', {
+		template:	`<form action="" @submit.prevent="formSubmit">
+						<input v-model="newCategoryName" type="text" value="">
+						<input type="submit" value="Add new item">
+					</form>`,
+		props: [
+
+		],
+		data: function () {
+			return {
+				newCategoryName: null
+			}
+		},
+		methods: {
+			formSubmit: function()
+			{
+				this.$emit('add-item-event', this.newCategoryName);
+			}
+		}
+	});
+
+	let app = new Vue({
+		el: '#app',
+		data: {
+			dude: 'Jack Frost',
+			vueAppCategories: [
+				{foreach $categories as $c}
+					{* Vytvorý js objekt *}
+					{	title: {$c->title}, status: {$c->status}, priority: {$c->priority}, id: {$c->id}	}
+					{sep}, {/sep}
+				{/foreach}
+			],
+			editFirstTitle: '',
+			newCategoryName: null,
+			newId: 100 // This is only number greater than items count. Instead of index value.
+		},
+		methods: {
+			'editFirstTitleCallback': function(e) {
+				console.log(this.editFirstTitle);
+				this.vueAppCategories[0].title = this.editFirstTitle;
+			},
+			'parentAddItem': function($event) {
+				this.newId++;
+				this.vueAppCategories.splice(2, 0, { title: $event, id: this.newId, status: 55, priority: 100 });
+			}
+		}
+	});
+
+</script>
+{/block}
