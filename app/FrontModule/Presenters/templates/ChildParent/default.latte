@@ -3,13 +3,16 @@
 <div class="row">
 	<div class="col-xs-12">
 		<div id="app">
-			<h2>Child - Parent</h2>
+			<h2>Child - Parent + Ref</h2>
 
 			<p>
 				Hodnoty sa z rodiča do potomka predávajú cez pole props resp. v-bind:name="value"
 			</p>
 			<p>
 				Hodnoty ktoré sa predávajú z potomka na rodiča sa musia predať cez event za použitia $emit("event-name", someData)
+			</p>
+			<p>
+				Ref je referencia na html element. Tu sa použije ako this.$refs.newCategoryInput.value = ''
 			</p>
 
 			<ul>
@@ -49,7 +52,7 @@
 
 	Vue.component('new-item-form', {
 		template:	`<form action="" @submit.prevent="formSubmit">
-						<input v-model="newCategoryName" type="text" value="">
+						<input v-model="newCategoryName" ref="newCategoryInput" type="text" value="">
 						<input type="submit" value="Add new item">
 					</form>`,
 		props: [
@@ -65,10 +68,15 @@
 			{
 				alert('aaaaaaaaaaaaaaaaa');
 				this.$emit('add-item-event', this.newCategoryName);
+				this.$refs.newCategoryInput.value = '';
 			}
 		}
 	});
 
+
+	////////////////////////////////////////////////////////////////////////////////////////
+	///// PARENT APP //////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////
 	let app = new Vue({
 		el: '#app',
 		data: {

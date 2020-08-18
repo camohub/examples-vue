@@ -54,7 +54,7 @@
 
 	Vue.component('new-item-form', {
 		template:	`<form action="" @submit.prevent="formSubmit">
-						<input v-model="newCategoryName" type="text" value="">
+						<input v-model="newCategoryName" ref="newCategoryInput" type="text" value="">
 						<input type="submit" value="Add new item">
 					</form>`,
 		props: [
@@ -69,6 +69,7 @@
 			formSubmit: function()
 			{
 				this.$emit('add-item-event', this.newCategoryName);
+				this.$refs.newCategoryInput.value = '';
 			}
 		}
 	});
